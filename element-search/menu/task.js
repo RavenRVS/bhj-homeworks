@@ -7,8 +7,12 @@ linkList.forEach((link) => link.onclick = () => {
     const subMenu = parentMenuItem.querySelector("ul");
     console.log(subMenuList);
     if (subMenu) {
-        subMenuList.forEach((subMenu) => subMenu.classList.remove('menu_active'))
-        subMenu.classList.add('menu_active');
+        if (subMenu.classList.contains('menu_active')) {
+            subMenu.classList.remove('menu_active');
+        } else {
+            subMenuList.forEach((subMenu) => subMenu.classList.remove('menu_active'))
+            subMenu.classList.add('menu_active');
+        }
         return false;
     }
 });
