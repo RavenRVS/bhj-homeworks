@@ -1,6 +1,15 @@
 body {
   font-family: Arial;
 }
+
+.cart {
+  display: none;
+}
+
+.cart_active {
+  display: block;
+}
+
 .cart__products {
   display: flex;
   justify-content: center;
@@ -74,7 +83,12 @@ body {
   padding: 0 10px;
 }
 
-.product__add {
+.btns__container {
+  display: flex;
+  gap: 10px;
+}
+
+.product__btn {
   background: green;
   padding: 10px 20px;
   color: #fff;
@@ -82,8 +96,21 @@ body {
   cursor: pointer;
 }
 
-.product__add:hover {
+.product__btn:hover {
   opacity: 0.8;
+}
+
+.product__add {
+  background: green;
+}
+
+.product__remove {
+  background: red;
+  display: none;
+}
+
+.product__remove_active {
+  display: inline;
 }
 
 .product-shadow {
