@@ -25,9 +25,9 @@ btnProductList.forEach(el => {
         e.preventDefault();
         let currentProduct = e.target.closest('.product');
         let param = getParamProduct(currentProduct);
-        let allProductsInCart = cart.querySelectorAll('.cart__product');
-        let productInCart = findProductInCart(allProductsInCart, param["idProduct"])
-        if (productInCart["finded"] == true) {
+        let allProductsInCart = Array.from(cart.querySelectorAll('.cart__product'));
+        let productInCart = allProductsInCart.find(findProductInCart, param);
+        if (allProductsInCart.length > 0 && productInCart != undefined) {
             if (e.target.classList.contains('product__add')) {
                 changeQuantityProductInCart(allProductsInCart, productInCart, param["productQuantity"], false);
             } else if (e.target.classList.contains('product__remove')) {
@@ -54,34 +54,22 @@ function getParamProduct (product) {
     }
 }
 
-function findProductInCart (productsList, idProduct) {
-    if (productsList != null) {
-        for (let i = 0; i < productsList.length; i++) {
-            if (productsList[i].dataset.id == idProduct) {
-                return {
-                    "finded": true,
-                    "index": i,
-                };
-            }
-        }
+function findProductInCart (element, index, array) {
+    if (element.dataset.id == this["idProduct"]) {
+        return element
     }
-    return {
-        "finded": false,
-    };;
 }
 
 function changeQuantityProductInCart(productsList, product, param, decQuantity) {
-    if (product["finded"]) {
-        let currentQuantity = productsList[product["index"]].querySelector('.cart__product-count');
-        if (decQuantity) {
-            if (+currentQuantity.textContent <= +param) {
-                removeProductFromCart(productsList, product)
-            } else {
-                currentQuantity.textContent = +currentQuantity.textContent - +param;
-            }
+    let currentQuantity = product.querySelector('.cart__product-count');
+    if (decQuantity) {
+        if (+currentQuantity.textContent <= +param) {
+            removeProductFromCart(productsList, product)
         } else {
-            currentQuantity.textContent = +currentQuantity.textContent + +param;
+            currentQuantity.textContent = +currentQuantity.textContent - +param;
         }
+    } else {
+        currentQuantity.textContent = +currentQuantity.textContent + +param;
     }
 }
 
@@ -99,9 +87,8 @@ function addNewProductInCart (param) {
 }
 
 function removeProductFromCart (productsList, product) {
-    let idProduct = productsList[product["index"]].dataset.id
-    productsList[product["index"]].remove()
-    changeBtnRemoveVisibility(idProduct, false)
+    product.remove()
+    changeBtnRemoveVisibility(product.dataset.id, false)
     if (productsList.length-1 <= 0) {
         cart.classList.remove('cart_active');
     }
