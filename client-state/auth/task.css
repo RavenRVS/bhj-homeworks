@@ -37,6 +37,15 @@
   box-shadow: none;
 }
 
+.btn__signout {
+  display: none;
+}
+
+.btn__signout_active {
+  display: block;
+  margin: 20px auto;
+}
+
 .welcome {
   display: none;
 }

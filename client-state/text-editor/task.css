@@ -1,3 +1,8 @@
+.content {
+  display: flex;
+  flex-direction: column;
+}
+
 textarea {
   max-width: 100%;
   width: 100%;
@@ -7,4 +12,9 @@ textarea {
   font-family: Golos, Arial, sans-serif;
   border: 1px solid #e2e2e2;
   box-sizing: border-box;
+}
+
+.editor__clear {
+  display: block;
+  align-self: center;
 }
