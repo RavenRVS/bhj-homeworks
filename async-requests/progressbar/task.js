@@ -3,32 +3,28 @@ const form = document.getElementById('form');
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-    runXHRFormData(form)
-    
+    upload(document.getElementById('file').files[0])
 })
 
-function runXHRFormData(form) {
-    const xhr = new XMLHttpRequest();
-    const formData = new FormData()
-    addListeners(xhr)
-    xhr.open("POST", 'https://students.netoservices.ru/nestjs-backend/upload');
-    xhr.send(form);
-    return xhr;
-}
+function upload(file) {
+    let xhr = new XMLHttpRequest();
 
-function addListeners(xhr) {
-    // xhr.addEventListener('loadstart', handleEvent);
-    // xhr.addEventListener('load', handleEvent);
-    // xhr.addEventListener('loadend', handleEvent);
-    xhr.addEventListener('progress', setValueProgressBar);
-    // xhr.addEventListener('error', handleEvent);
-    // xhr.addEventListener('abort', handleEvent);
+    xhr.upload.onprogress = function(event) {
+        setValueProgressBar(event);
+    };
+
+    xhr.onloadend = function() {
+      if (xhr.status == 201) {
+        console.log("Успех");
+      } else {
+        console.log("Ошибка " + this.status);
+      }
+    };
+  
+    xhr.open("POST", "https://students.netoservices.ru/nestjs-backend/upload");
+    xhr.send(file);
 }
 
 function setValueProgressBar(e) {
     progressBar.value = e.loaded / e.total;
 }
-
-// function handleEvent(e) {
-//     console.log(`${e.type}: ${e.loaded} bytes transferred from ${e.total}\n`);
-// }
