@@ -14,9 +14,9 @@ function setCookie (name, value) {
 
 if (!getCookie('modal')) {
     subscribeModal.classList.add('modal_active');
-    setCookie('modal', 'viewed')
     subscribeModal.onclick = (e) => {
         if (e.target.classList.contains('modal__close_times')){
+            setCookie('modal', 'viewed')
             e.currentTarget.classList.remove('modal_active')
         };
     }

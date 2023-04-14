@@ -2,9 +2,8 @@ let editor = document.getElementById('editor');
 let textInlocalStorage = localStorage.getItem("textFromEditor");
 let clearBtn = document.getElementById('clear');
 
-if (textInlocalStorage) {
-    editor.textContent = textInlocalStorage;
-}
+editor.textContent = textInlocalStorage;
+
 
 clearBtn.addEventListener('click', clearArea)
 editor.addEventListener('input', saveText);

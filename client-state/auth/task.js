@@ -11,31 +11,22 @@ function sendForm(e) {
     let xhr = new XMLHttpRequest();
 
     xhr.open("POST", "https://students.netoservices.ru/nestjs-backend/auth");
+    xhr.responseType = 'json'
     xhr.send(formData);
 
     xhr.onload = (e) => {
-        if (xhr.status == 201) {
-            handlerEvent(xhr.response);
-        } else {
-            alert('Ошибка отправки данных');
-            signinForm.reset();
-        }
+        signinForm.reset();
+        handlerEvent(xhr.response);
     }
 }
 
 function handlerEvent (response) {
-    try {
-        let res = JSON.parse(response);
-        if (res["success"]) {
-            localStorage.setItem('userId', res["user_id"])
-            isSign(res["user_id"]);
-        } else if (!res["success"]) {
-            alert('Неверный логин/пароль');
-            signinForm.reset();
-        }
-    } catch (e) {
-        console.log('Ошибка десериализации')
-        return null
+    let res = response;
+    if (res["success"]) {
+        localStorage.setItem('userId', res["user_id"])
+        isSign(res["user_id"]);
+    } else if (!res["success"]) {
+        alert('Неверный логин/пароль');
     }
 }
 
